@@ -1,8 +1,8 @@
 import {Request, Response} from 'express'
 import { CreateUserService } from '../services/CreateUserService'
 
-class CreateUserController {
-    async handle(request: Request, response: Response) {
+class UserController {
+    async create(request: Request, response: Response) {
         const {name, email, admin} = request.body
 
         const createUserService = new CreateUserService()
@@ -11,6 +11,9 @@ class CreateUserController {
 
         return response.json(user)
     }
+    async list(request: Request, response: Response) {
+
+    }
 }
 
-export {CreateUserController}
+export {UserController}

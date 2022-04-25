@@ -9,7 +9,7 @@ interface IUserRequest {
 class CreateUserService {
     async execute({name, email, admin}: IUserRequest) {
         try {
-            return prismaClient.users.create({
+            return await prismaClient.users.create({
                 data: {
                     name: name,
                     email: email,
