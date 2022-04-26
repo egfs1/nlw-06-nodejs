@@ -1,9 +1,15 @@
 import {Request, Response, NextFunction} from 'express'
+import prismaClient from '../prisma'
 
-export function ensureAdmin(request: Request, response: Response, next: NextFunction){
-    const admin = true
+export async function ensureAdmin(request: Request, response: Response, next: NextFunction){
+    const {user_id} = request
 
-    if(admin){
+    const user = await prismaClient.user.findUnique({
+        where: {
+            id: user_id
+        }
+    })
+    if(user.admin){
         return next()
     }
 
