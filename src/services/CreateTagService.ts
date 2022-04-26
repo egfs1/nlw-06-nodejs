@@ -7,7 +7,7 @@ interface ITagRequest {
 class CreateTagService {
     async execute({name}: ITagRequest) {
         try {
-            return await prismaClient.tags.create({
+            return await prismaClient.tag.create({
                 data: {
                     name: name,
                 },

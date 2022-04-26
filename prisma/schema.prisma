@@ -10,18 +10,41 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model users {
+model User {
   id String @id @default(uuid())
   name String
   email String @unique
+  password String
   admin Boolean @default(false)
+  compliments_sender Compliment[] @relation("compliments_sender")
+  compliments_receiver Compliment[] @relation("compliments_receiver")
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+
+  @@map("users")
 }
 
-model tags {
+model Tag {
   id String @id @default(uuid())
   name String @unique
+  compliments Compliment[]
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+
+  @@map("tags")
+}
+
+model Compliment {
+  id String @id @default(uuid())
+  user_sender User @relation("compliments_sender",fields: [user_sender_id], references: [id], onDelete: Cascade)
+  user_sender_id String
+  user_receiver User @relation("compliments_receiver",fields: [user_receiver_id], references: [id], onDelete: Cascade)
+  user_receiver_id String
+  tag Tag @relation(fields: [tag_id], references: [id])
+  tag_id String
+  message String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("compliments")
 }

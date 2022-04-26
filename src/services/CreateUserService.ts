@@ -1,18 +1,24 @@
 import prismaClient from "../prisma"
+import {hash} from 'bcryptjs'
 
 interface IUserRequest {
     name: string,
     email: string,
+    password: string,
     admin?: boolean
 }
 
 class CreateUserService {
-    async execute({name, email, admin}: IUserRequest) {
+    async execute({name, email, password, admin=false}: IUserRequest) {
+
+        const passwordHash = await hash(password, 8)
+
         try {
-            return await prismaClient.users.create({
+            return await prismaClient.user.create({
                 data: {
                     name: name,
                     email: email,
+                    password: passwordHash,
                     admin: admin
                 },
             })
