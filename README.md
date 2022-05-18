@@ -29,13 +29,19 @@ $ cd nlw-06-nodejs
 É necessário adicionar as variaveis ambientes
 
 ```js
-DATABASE_URL="dbtype://myuser:mypassword@localhost:port/mydb"
+DATABASE_URL="dbconnector://myuser:mypassword@localhost:port/mydb"
 JWT_PASSWORD=
 ```
 
 Para iniciar, siga os passos abaixo:
 ```bash
+# Instalar dependências
 $ yarn install
+
+# Adicionar migrations
+$ yarn prisma migrate deploy
+
+# Executar a aplicação
 $ yarn dev
 ```
 
